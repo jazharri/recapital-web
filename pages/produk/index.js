@@ -2,8 +2,16 @@ import axios from 'axios'
 import ProdukCard from '../../components/ProdukCard'
 
 export async function getStaticProps() {
-  const res = await axios.get(process.env.STRAPI_API_URL + '/produk-reksadanas?populate=*')
-  return { props: { produk: res.data.data || [] }, revalidate: 60 }
+  const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL
+  let produk = []
+  try {
+    const res = await axios.get(`${API_URL}/produk-reksadanas?populate=*`, { timeout: 15000 })
+    produk = res.data.data || []
+  } catch (err) {
+    console.error('Failed to fetch produk:', err.message)
+    produk = [] // fallback jika gagal fetch
+  }
+  return { props: { produk }, revalidate: 60 }
 }
 
 export default function Produk({ produk }) {
