@@ -1,7 +1,7 @@
 import axios from 'axios'
 import ProdukCard from '../../components/ProdukCard'
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL
   let produk = []
   try {
@@ -9,10 +9,11 @@ export async function getStaticProps() {
     produk = res.data.data || []
   } catch (err) {
     console.error('Failed to fetch produk:', err.message)
-    produk = [] // fallback jika gagal fetch
+    produk = []
   }
-  return { props: { produk }, revalidate: 60 }
+  return { props: { produk } }
 }
+
 
 export default function Produk({ produk }) {
   return (
