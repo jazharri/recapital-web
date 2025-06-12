@@ -2,7 +2,10 @@ import axios from 'axios'
 import ArticleCard from '../../components/ArticleCard'
 
 export async function getStaticProps() {
-  const res = await axios.get(process.env.STRAPI_API_URL + '/artikels?populate=*')
+const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL
+const res = await axios.get(`${API_URL}/produk?populate=*`)
+
+  //const res = await axios.get(process.env.STRAPI_API_URL + '/artikels?populate=*')
   return { props: { artikel: res.data.data || [] }, revalidate: 60 }
 }
 
