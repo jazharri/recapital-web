@@ -14,7 +14,6 @@ export async function getServerSideProps() {
   return { props: { produk } }
 }
 
-
 export default function Produk({ produk }) {
   return (
     <div className="max-w-4xl mx-auto mt-8">
